@@ -34,7 +34,7 @@ Welcome to **eSPACE**, a stunning space exploration dashboard powered by real-ti
 
 ## 🙌 Made With Love
 
-Built with 💙 by **Sanket Padhyal**  
+Built with ❤️ by **Sanket Padhyal**  
 GitHub: [@sanketpadhyal](https://github.com/sanketpadhyal)  
 Alias: `VortexByte`
 
