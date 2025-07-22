@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/index.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eSPACE Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/space.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    .background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 5, 5, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+    .page-animate {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUpFade 0.7s ease-out forwards;
+    }
+
+    @keyframes slideUpFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .branding-glass.center-brand {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .e-red {
+      color: #ff5555;
+    }
+
+    .space-glow {
+      color: #00ffee;
+      text-shadow: 0 0 10px #00ffeeaa;
+    }
+
+    .glass-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .glass-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #00ffee66;
+      padding: 12px 20px;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      backdrop-filter: blur(6px);
+      transition: 0.3s ease;
+    }
+
+    .glass-btn:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: scale(1.05);
+      border-color: #00ffaa;
+    }
+
+    .tv-box.glass-panel {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 0 20px #00ffee44;
+      backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+
+    .tv-heading {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #00ffee;
+    }
+
+    .glass-content {
+      text-align: center;
+    }
+
+    .glass-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .glass-subtext, .glass-link {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .glass-link {
+      margin-top: 8px;
+      color: #00ffaa;
+    }
+
+    .news-tv {
+      max-width: 600px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 15px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 10px #00ffaa33;
+    }
+
+    .news-title {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #00ffaa;
+    }
+
+    .news-ticker {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .space-footer {
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(10px);
+      color: #ccc;
+      text-align: center;
+      font-size: 13px;
+      padding: 10px 0;
+      box-shadow: 0 -1px 10px #00f0ff44;
+      border-top: 1px solid #222;
+    }
+
+    .space-footer a {
+      color: #00f0ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .space-footer a:hover {
+      color: #00ff99;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 16px;
+    }
+
+    .footer-icons a {
+      color: #ccc;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .footer-icons a:hover {
+      color: #00ffcc;
+      transform: scale(1.2) rotate(6deg);
+    }
+
+    @media (max-width: 768px) {
+      .glass-btn {
+        width: 100%;
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .tv-box.glass-panel,
+      .news-tv {
+        width: 90%;
+        margin: 15px auto;
+      }
+
+      .branding-glass.center-brand {
+        font-size: 28px;
+      }
+
+      .glass-title {
+        font-size: 18px;
+      }
+
+      .glass-subtext,
+      .glass-link {
+        font-size: 13px;
+      }
+
+      .news-title {
+        font-size: 16px;
+      }
+
+      .footer-content {
+        font-size: 12px;
+      }
+
+      .footer-icons {
+        font-size: 14px;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper page-animate">
+    <div class="main-content">
+      <div class="background"></div>
+
+      <!-- Branding -->
+      <div class="branding-glass center-brand">
+        <span class="e-red">e</span><span class="space-glow">SPACE</span>
+      </div>
+
+      <!-- Panel Buttons -->
+      <div class="glass-buttons">
+        <button class="glass-btn" onclick="window.location.href='solar.html'">🚀 Solar System</button>
+        <button class="glass-btn" onclick="window.location.href='live.html'">🛰️ Live International Space Station</button>
+        <button class="glass-btn" onclick="window.location.href='mission.html'">📡 Missions</button>
+        <button class="glass-btn" onclick="window.location.href='pisrn.html'">🛰️ People On ISS 🛰️</button>
+        <button class="glass-btn" onclick="window.location.href='asteroids.html'">☄️ Asteroids</button>
+        <button class="glass-btn" onclick="window.location.href='epic.html'">🌎 Earth Gallery</button>
+        <button class="glass-btn" onclick="window.location.href='space-quiz.html'">📝 Live Quiz</button>
+      </div>
+
+      <!-- NASA IMAGE TV -->
+      <div class="tv-box glass-panel" onclick="window.location.href='image.html'">
+        <div class="tv-heading">
+          <i class="fas fa-tv"></i> NASA IMAGE FEED
+        </div>
+        <div class="glass-content">
+          <p class="glass-title">🌌 Explore The Universe</p>
+          <p class="glass-subtext">Tap this panel to unlock stunning daily visuals from NASA.</p>
+          <p class="glass-link">🔭 View NASA Images →</p>
+        </div>
+      </div>
+
+      <!-- NEWS TV -->
+      <div class="news-tv">
+        <div class="news-title">
+          <i class="fas fa-newspaper"></i> NASA NEWS FEED
+        </div>
+        <div class="news-ticker">
+          <div class="news-items" id="newsItems">
+            <!-- News will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="space-footer">
+      <div class="footer-content">
+        <span>© 2025 <a href="https://github.com/sanketpadhyal" target="_blank">@sanketpadhyal</a> ~ VortexByte — All rights reserved</span>
+        <div class="footer-icons">
+          <a href="mailto:mrsanketpadhyal@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a>
+          <a href="https://github.com/sanketpadhyal" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fas fa-rocket"></i></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

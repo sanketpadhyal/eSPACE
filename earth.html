@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌍 Earth View - NASA API</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 60px auto;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+      animation: slideUp 1s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+
+    .btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    #earthImage {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      margin-bottom: 15px;
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.95em;
+      color: #ffaaaa;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 15px;
+        padding: 20px;
+      }
+
+      #earthImage {
+        max-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="buttons">
+      <div class="btn" onclick="location.href='dashboard.html'">🔙 Back to Dashboard</div>
+    </div>
+
+    <h1>🌍 Earth View by NASA</h1>
+
+    <img id="earthImage" src="" alt="Loading Earth image..." />
+    
+    <div class="note">
+      🚨 If live image fails to load, a static HD Earth image will be shown.<br>
+      📍 Location: Cape Canaveral | Date: 2022-12-01 | Source: NASA Earth Imagery API
+    </div>
+  </div>
+
+  <script>
+    async function fetchEarthImage() {
+      const apiKey = "ENTER_YOUR_API_HERE";
+      const lat = 29.78;
+      const lon = -95.33;
+      const date = "2022-12-01";
+      const dim = 0.15;
+
+      const url = `https://api.nasa.gov/planetary/earth/imagery?lon=${lon}&lat=${lat}&date=${date}&dim=${dim}&api_key=${apiKey}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Image not available");
+        const blob = await res.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        document.getElementById("earthImage").src = imageUrl;
+      } catch (err) {
+        // fallback HD image
+        document.getElementById("earthImage").src =
+          "https://eoimages.gsfc.nasa.gov/images/imagerecords/74000/74192/world.topo.bathy.200412.3x5400x2700.jpg";
+      }
+    }
+
+    fetchEarthImage();
+  </script>
+</body>
+</html>

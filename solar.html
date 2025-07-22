@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/solar.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solar System Explorer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/solar.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .back-btn {
+      margin: 20px;
+      padding: 10px 20px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .header {
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-shadow: 0 0 10px #00ccff;
+    }
+
+    .note {
+      text-align: center;
+      margin: 10px auto 20px;
+      font-size: 14px;
+      color: #ccc;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(6px);
+      width: fit-content;
+      padding: 6px 12px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px #000;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .search-input {
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: none;
+      width: 180px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .search-input:focus {
+      width: 260px;
+      box-shadow: 0 0 10px #00ccff;
+    }
+
+    .search-btn {
+      padding: 10px 18px;
+      margin-left: 10px;
+      border-radius: 20px;
+      background: #00ccff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .search-btn:hover {
+      background: #00aacc;
+    }
+
+    .planet-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 20px;
+      animation: upFade 1.2s ease;
+    }
+
+    @keyframes upFade {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+
+    .planet-card {
+      width: 150px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .planet-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #00ccff88;
+    }
+
+    .planet-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 20px;
+      z-index: 9999;
+      box-shadow: 0 0 20px #00ccff77;
+      color: #fff;
+      width: 90%;
+      max-width: 500px;
+      display: none;
+      text-align: center;
+    }
+
+    .popup h3 {
+      margin-top: 0;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .popup p {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #00ccff;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="location.href='dashboard.html'">← Back to Dashboard</button>
+  <div class="header">🌌 Solar System Explorer</div>
+  <div class="note">⚠️ This is currently stored data. API doesn't support this kind of integration yet for this web type.</div>
+
+  <div class="search-box">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search planets..." />
+    <button class="search-btn" onclick="filterPlanets()">Search</button>
+  </div>
+
+  <div class="planet-container" id="planetContainer"></div>
+
+  <div class="popup" id="planetPopup">
+    <button class="close-btn" onclick="closePopup()">✖</button>
+    <h3 id="popupTitle"></h3>
+    <p id="popupInfo"></p>
+  </div>
+
+  <script>
+    const solarPlanets = [
+      { name: "Mercury", info: "Smallest planet, closest to Sun.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Venus", info: "Second planet, very hot atmosphere.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Earth", info: "Our home planet.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Mars", info: "Known as the Red Planet.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Jupiter", info: "Largest planet in our solar system.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Saturn", info: "Famous for its ring system.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Uranus", info: "Icy gas giant with unique tilt.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+      { name: "Neptune", info: "Farthest known planet from the Sun.", img: "https://cdn-icons-png.flaticon.com/512/584/584952.png" },
+    ];
+
+    const otherPlanets = Array.from({ length: 50 }, (_, i) => ({
+      name: `Planet-${i + 1}`,
+      img: "https://cdn-icons-png.flaticon.com/512/584/584952.png",
+      info: `This is a placeholder for planet-${i + 1} known from deep universe research.`,
+    }));
+
+    const allPlanets = [...solarPlanets, ...otherPlanets];
+
+    const container = document.getElementById('planetContainer');
+    const popup = document.getElementById('planetPopup');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupInfo = document.getElementById('popupInfo');
+
+    function displayPlanets(planets) {
+      container.innerHTML = '';
+      planets.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'planet-card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}">
+          <div><strong>${p.name}</strong></div>
+        `;
+        card.onclick = () => {
+          popupTitle.textContent = p.name;
+          popupInfo.textContent = p.info;
+          popup.style.display = 'block';
+        };
+        container.appendChild(card);
+      });
+    }
+
+    function closePopup() {
+      popup.style.display = 'none';
+    }
+
+    function filterPlanets() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allPlanets.filter(p => p.name.toLowerCase().includes(query));
+      displayPlanets(filtered);
+    }
+
+    displayPlanets(allPlanets);
+  </script>
+
+</body>
+</html>

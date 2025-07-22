@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/asteroids.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/asteroids.png" />
+  <title>eSPACE • NASA</title>
+  <title>🪐 NASA Asteroids Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/asteroids.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 60px auto;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+      animation: slideUp 1s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+
+    .btn {
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: white;
+      padding: 12px 18px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .asteroid {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      margin: 15px 0;
+      padding: 15px;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.15);
+      transition: 0.3s ease;
+    }
+
+    .asteroid:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: scale(1.02);
+    }
+
+    .note {
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #ffaaaa;
+      font-style: italic;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 30px 15px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="btn" onclick="location.href='dashboard.html'">🔙 Back to Dashboard</div>
+    <h1>☄️ Live NASA Asteroid Feed</h1>
+    <div id="asteroidList">Fetching asteroids...</div>
+    <div class="note">
+      ⚠️ This data is from NASA's official asteroid API. It may not be 100% real-time. Any updates made by NASA will automatically reflect here.
+    </div>
+  </div>
+
+  <script>
+    async function fetchAsteroids() {
+      const asteroidList = document.getElementById("asteroidList");
+      asteroidList.innerText = "Loading data...";
+
+      const apiKey = "ENTER_YOUR_API_HERE";
+      const today = new Date().toISOString().split("T")[0];
+
+      try {
+        const res = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${today}&end_date=${today}&api_key=${apiKey}`);
+        const data = await res.json();
+        const nearEarthObjects = data.near_earth_objects[today];
+
+        if (!nearEarthObjects || nearEarthObjects.length === 0) {
+          asteroidList.innerHTML = "<p>No asteroids found for today.</p>";
+          return;
+        }
+
+        asteroidList.innerHTML = "";
+        nearEarthObjects.forEach(asteroid => {
+          const elem = document.createElement("div");
+          elem.className = "asteroid";
+          elem.innerHTML = `
+            <strong>☄️ ${asteroid.name}</strong><br>
+            📅 Date: ${asteroid.close_approach_data[0].close_approach_date}<br>
+            🧭 Velocity: ${parseFloat(asteroid.close_approach_data[0].relative_velocity.kilometers_per_hour).toFixed(2)} km/h<br>
+            📏 Diameter: ${asteroid.estimated_diameter.meters.estimated_diameter_min.toFixed(1)} - ${asteroid.estimated_diameter.meters.estimated_diameter_max.toFixed(1)} meters<br>
+            ⚠️ Hazardous: ${asteroid.is_potentially_hazardous_asteroid ? "Yes" : "No"}
+          `;
+          asteroidList.appendChild(elem);
+        });
+      } catch (err) {
+        asteroidList.innerHTML = "<p>🚫 Failed to load asteroid data. Please try again later.</p>";
+        console.error(err);
+      }
+    }
+
+    fetchAsteroids();
+  </script>
+
+</body>
+</html>

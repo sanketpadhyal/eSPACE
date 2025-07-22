@@ -1,0 +1,618 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: url("assets/space.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.branding {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 22px;
+  z-index: 99;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.e {
+  color: red;
+}
+.space {
+  color: #ffffffcc;
+  text-shadow: 0 0 6px #0ff;
+}
+
+.solar-system {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.sun { 
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 40px 20px #ffbb00cc;
+}
+
+
+/* Base orbit styles */
+.orbit {
+  position: absolute;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Planet orbits and animation */
+.orbit .planet {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mercury-orbit {
+  width: 120px;
+  height: 120px;
+  animation: rotate 18s linear infinite;
+}
+.venus-orbit {
+  width: 160px;
+  height: 160px;
+  animation: rotate 24s linear infinite;
+}
+.earth-orbit {
+  width: 210px;
+  height: 210px;
+  animation: rotate 30s linear infinite;
+}
+.mars-orbit {
+  width: 270px;
+  height: 270px;
+  animation: rotate 38s linear infinite;
+}
+.jupiter-orbit {
+  width: 340px;
+  height: 340px;
+  animation: rotate 50s linear infinite;
+}
+.saturn-orbit {
+  width: 420px;
+  height: 420px;
+  animation: rotate 60s linear infinite;
+}
+.uranus-orbit {
+  width: 500px;
+  height: 500px;
+  animation: rotate 70s linear infinite;
+}
+.neptune-orbit {
+  width: 580px;
+  height: 580px;
+  animation: rotate 80s linear infinite;
+}
+
+/* Planet sizes */
+.mercury-orbit .planet { width: 12px; height: 12px; }
+.venus-orbit .planet   { width: 18px; height: 18px; }
+.earth-orbit .planet   { width: 20px; height: 20px; }
+.mars-orbit .planet    { width: 16px; height: 16px; }
+.jupiter-orbit .planet { width: 40px; height: 40px; }
+.saturn-orbit .planet  { width: 36px; height: 36px; }
+.uranus-orbit .planet  { width: 30px; height: 30px; }
+.neptune-orbit .planet { width: 28px; height: 28px; }
+
+@keyframes rotate {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* index.html /*
+
+/* Background */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+.background {
+  background: url('assets/space.jpg') no-repeat center center/cover;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+/* Branding */
+.branding-glass {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.e-red {
+  color: red;
+  font-weight: bold;
+}
+
+.space-glow {
+  color: white;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+/* Buttons */
+.glass-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 100px;
+  gap: 20px;
+  padding: 20px;
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-size: 18px;
+  color: white;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00ffff88;
+}
+
+/* NASA TV */
+.nasa-tv {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1000px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  color: white;
+}
+
+.tv-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.tv-feed {
+  display: flex;
+  gap: 12px;
+  animation: scroll-left 40s linear infinite;
+}
+
+.tv-feed img {
+  height: 120px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth Scroll */
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Reset and Background */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+.background {
+  background: url('assets/space.jpg') no-repeat center center/cover;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  filter: brightness(0.6);
+}
+
+/* Branding - Centered Top */
+.center-brand {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 30px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 0 20px #00ffff44;
+}
+
+.e-red {
+  color: red;
+  font-weight: bold;
+}
+
+.space-glow {
+  color: white;
+  text-shadow: 0 0 10px #00ffff;
+}
+
+/* Buttons Section */
+.glass-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 150px;
+  gap: 20px;
+  padding: 20px;
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  padding: 14px 28px;
+  font-size: 18px;
+  color: white;
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px #ffffff11;
+  font-weight: 500;
+}
+
+.glass-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0 15px #00ffffaa;
+}
+
+/* NASA TV */
+.nasa-tv {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1100px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  color: white;
+  box-shadow: 0 0 20px #00ffff22;
+}
+
+.big-tv {
+  height: 200px;
+}
+
+.tv-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: bold;
+  text-shadow: 0 0 5px #ffffff88;
+}
+
+.tv-feed {
+  display: flex;
+  gap: 14px;
+  animation: scroll-left 50s linear infinite;
+  align-items: center;
+}
+
+.tv-feed img {
+  height: 160px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px #ffffff22;
+}
+
+/* Scroll Animation */
+@keyframes scroll-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Glass Buttons – no change */
+.glass-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 150px;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Updated NASA TV */
+.nasa-tv {
+  position: relative; /* changed from absolute */
+  margin: 40px auto 0;
+  width: 92%;
+  max-width: 1100px;
+  height: 180px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  color: white;
+  box-shadow: 0 0 20px #00ffff22;
+}
+
+/* Optional tweak if you want it tighter */
+.tv-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 0 0 5px #ffffff88;
+}
+
+/* Image height a bit more compact now */
+.tv-feed img {
+  height: 140px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px #ffffff22;
+}
+.tv-box {
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 900px;
+  height: 260px;
+  border-radius: 20px;
+  background: linear-gradient(to bottom, #0a0a0a, #000000);
+  box-shadow: inset 0 0 30px #00ffee10, 0 0 20px #00ffee22;
+  border: 1px solid #00ffee33;
+  position: relative;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease-in-out;
+}
+
+.tv-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.07), transparent);
+  pointer-events: none;
+}
+
+.tv-heading {
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tv-heading i {
+  color: #ccc;
+}
+.news-tv {
+  margin: 30px auto 10px;
+  padding: 15px;
+  width: 80%;
+  max-width: 900px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #00ffee33;
+  box-shadow: 0 0 20px #00ffee22;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  position: relative;
+}
+
+.news-title {
+  color: #00ffee;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.news-ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  border-top: 1px solid #444;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.news-items {
+  display: inline-block;
+  animation: scrollNews 40s linear infinite;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@keyframes scrollNews {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+}
+
+.view-feed-btn {
+  background: #00ffcc;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.view-feed-btn:hover {
+  background: #00ddaa;
+  transform: scale(1.05);
+}
+
+#nasaImageContent {
+  display: flex;
+  gap: 15px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+#nasaImageContent img {
+  max-height: 150px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Transparent glass panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Glass hover interaction */
+.glass-panel:hover {
+  transform: scale(1.015);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Transparent heading */
+.transparent-heading {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Glass panel content */
+.glass-content {
+  text-align: center;
+  color: #ffffff;
+}
+
+.glass-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.glass-subtext {
+  font-size: 15px;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.glass-link {
+  font-size: 16px;
+  color: #00ccff;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+/* Optional glowing link effect */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Fix spacing in eSPACE branding */
+.title, .branding, .logo {
+  font-family: 'Orbitron', sans-serif; /* Or any futuristic font you're using */
+  letter-spacing: -1px; /* Slightly tighter */
+  font-weight: 700;
+  color: #00ffee;
+  text-shadow: 0 0 8px #00ffeeaa;
+}
+
+/* Optional hover effect */
+.title:hover {
+  text-shadow: 0 0 15px #00ffee;
+  transition: all 0.3s ease-in-out;
+}
+

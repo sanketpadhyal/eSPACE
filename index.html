@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🚀 Welcome to eSPACE</title>
+  <link rel="icon" href="assets/solar.png" type="image/png" />
+
+  <style>
+    :root {
+      --glass: rgba(255, 255, 255, 0.1);
+      --glow: 0 0 30px rgba(0, 255, 255, 0.4);
+      --shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('assets/loading.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.15);
+      animation: slideUp 1s ease-in-out;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: var(--glow);
+      letter-spacing: 1px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 35px;
+      opacity: 0.95;
+      animation: fadeInUp 2s ease;
+    }
+
+    .tagline span {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .get-started {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: #000;
+      padding: 14px 40px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 20px #00f2fe;
+      transition: all 0.3s ease-in-out;
+      font-weight: 600;
+    }
+
+    .get-started:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #4facfe;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .footer a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(60px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .tagline {
+        font-size: 1rem;
+        padding: 0 10px;
+      }
+      .get-started {
+        font-size: 1rem;
+        padding: 12px 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🚀 Welcome to eSPACE</h1>
+
+    <div class="tagline">
+      <span>Your gateway to the cosmos — beautifully engineered with real-time NASA APIs.</span>
+      <span>Get daily insights from Mars Rovers, ISS, Earth imagery, Asteroid trackers, and more.</span>
+      <span>Stunning visuals, real data — all packed into one premium dashboard.</span>
+      <span>Built by a space enthusiast for curious minds like you 💫</span>
+    </div>
+
+    <button class="get-started" onclick="redirectToDashboard()">🌌 Get Started</button>
+
+    <div class="footer">
+      Made with ❤️ by <strong>Sanket Padhyal</strong> • 
+      <a href="https://github.com/sanketpadhyal" target="_blank">@sanketpadhyal</a>
+    </div>
+  </div>
+
+  <script>
+    function redirectToDashboard() {
+      window.location.href = "dashboard.html";
+    }
+  </script>
+</body>
+</html>

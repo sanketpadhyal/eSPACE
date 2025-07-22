@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/live.png"/>
+  <meta charset="UTF-8" />
+  <title>🚀 LIVE ISS 🚀</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/ISS.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 60px auto;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 25px;
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+
+    .data {
+      font-size: 1.2em;
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    iframe {
+      width: 100%;
+      height: 420px;
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 18px;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .note {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.95em;
+      color: #ffaaaa;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🛰️ LIVE ISS 🛰️</h1>
+    <div class="data" id="issData">Loading ISS location...</div>
+    <iframe id="issMap"></iframe>
+
+    <div class="buttons">
+      <div class="btn" onclick="loadISS()">🔄 Refresh Location</div>
+      <div class="btn" onclick="location.href='dashboard.html'">🔙 Back to Dashboard</div>
+    </div>
+
+    <div class="note">
+      ⚠️ NOTE: This uses live ISS coordinates. Some delays may occur based on satellite signal accuracy.
+    </div>
+  </div>
+
+  <script>
+    async function loadISS() {
+      const dataBox = document.getElementById('issData');
+      const mapFrame = document.getElementById('issMap');
+      dataBox.innerText = "Fetching live position...";
+
+      try {
+        const res = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
+        const data = await res.json();
+
+        const { latitude, longitude, velocity } = data;
+
+        dataBox.innerHTML = `
+          🌍 <strong>Latitude:</strong> ${latitude.toFixed(2)}<br>
+          🌍 <strong>Longitude:</strong> ${longitude.toFixed(2)}<br>
+          🚀 <strong>Speed:</strong> ${velocity.toFixed(2)} km/h
+        `;
+
+        mapFrame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 10},${latitude - 10},${longitude + 10},${latitude + 10}&layer=mapnik&marker=${latitude},${longitude}`;
+      } catch (err) {
+        dataBox.innerText = "🚫 Failed to fetch live data.";
+      }
+    }
+
+    loadISS();
+  </script>
+</body>
+</html>

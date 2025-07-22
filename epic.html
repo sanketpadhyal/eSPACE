@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/epic.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📸 EPIC Earth • eSPACE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('assets/epic.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      overflow-x: hidden;
+      animation: slideUp 1s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity:0; }
+      to { transform: translateY(0); opacity:1; }
+    }
+
+    .header {
+      text-align: center;
+      margin-top: 90px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff99;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: -60px;
+      left: 20px;
+      background: rgba(0,0,0,0.4);
+      color: #00ffff;
+      border: 1px solid #00ffff66;
+      padding: 8px 14px;
+      border-radius: 8px;
+      backdrop-filter: blur(5px);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      transition: 0.3s;
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #00ffff33;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .note {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ccc;
+      font-size: 0.9rem;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px #000;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0,255,255,0.4);
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .card .caption {
+      padding: 12px;
+      font-size: 0.9rem;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .loader, .error-msg {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-top: 40px;
+    }
+
+    .loader { color: #00ffcc; }
+    .error-msg { color: #ff7777; }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.92);
+      border-radius: 18px;
+      width: 95%;
+      max-width: 600px;
+      max-height: 85%;
+      overflow-y: auto;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 25px rgba(0,255,255,0.4);
+      display: none;
+      z-index: 2000;
+    }
+
+    .popup img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .popup h2 {
+      margin: 12px 0 8px;
+      font-size: 1.5rem;
+      color: #00ffff;
+    }
+
+    .popup p {
+      font-size: 1rem;
+      color: #ddd;
+      line-height: 1.5;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: #00ffff22;
+      color: white;
+      border: none;
+      font-size: 1.2rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .close-btn:hover {
+      background: #00ffff66;
+    }
+
+    .popup::-webkit-scrollbar {
+      width: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .popup::-webkit-scrollbar-thumb {
+      background: #00ffff;
+      border-radius: 4px;
+    }
+
+    @media(max-width: 600px) {
+      .back-btn {
+        position: static;
+        margin: 10px auto 20px;
+        justify-content: center;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+        margin-top: 20px;
+      }
+
+      .note { font-size: 0.85rem; padding: 5px 10px; }
+      .card .caption { font-size: 0.85rem; }
+      .popup h2 { font-size: 1.2rem; }
+      .popup p { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <a class="back-btn" href="dashboard.html">
+      <i class="fas fa-arrow-left"></i>&nbsp;Dashboard
+    </a>
+    <h1>🌍 EPIC Earth Gallery</h1>
+  </div>
+
+  <div class="note">
+    ⚠️ Showing latest EPIC natural color images. API updates daily; may not be real-time.
+  </div>
+
+  <div id="loader" class="loader">Loading EPIC images...</div>
+  <div id="error" class="error-msg" style="display:none;">
+    🚫 Failed loading EPIC data. Try again later, it might be API usage issue.
+  </div>
+  <div id="gallery" class="gallery"></div>
+
+  <div id="popup" class="popup">
+    <button class="close-btn" onclick="closePopup()">✖</button>
+    <img id="popupImg" src="" alt="EPIC Earth image" />
+    <h2 id="popupDate"></h2>
+    <p id="popupCaption"></p>
+  </div>
+
+  <script>
+    const apiKey = "ENTER_YOUR_API_HERE";
+    const loader = document.getElementById('loader');
+    const error = document.getElementById('error');
+    const gallery = document.getElementById('gallery');
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popupImg');
+    const popupDate = document.getElementById('popupDate');
+    const popupCaption = document.getElementById('popupCaption');
+
+    async function loadEpic() {
+      loader.style.display = 'block';
+      error.style.display = 'none';
+      try {
+        const res = await fetch(`https://api.nasa.gov/EPIC/api/natural?api_key=${apiKey}`);
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        loader.style.display = 'none';
+        if (!data.length) throw new Error("No images");
+
+        data.slice(0, 10).forEach(item => {
+          const dateObj = new Date(item.date);
+          const yyyy = dateObj.getUTCFullYear();
+          const mm = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+          const dd = String(dateObj.getUTCDate()).padStart(2, '0');
+          const url = `https://epic.gsfc.nasa.gov/archive/natural/${yyyy}/${mm}/${dd}/jpg/${item.image}.jpg`;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${url}" alt="${item.caption}" loading="lazy" />
+            <div class="caption">${item.caption}</div>
+          `;
+          card.onclick = () => {
+            popupImg.src = url;
+            popupDate.innerText = dateObj.toDateString();
+            popupCaption.innerText = item.caption;
+            popup.style.display = 'block';
+          };
+          gallery.appendChild(card);
+        });
+      } catch (err) {
+        console.error("EPIC load error:", err);
+        loader.style.display = 'none';
+        error.style.display = 'block';
+      }
+    }
+
+    function closePopup() {
+      popup.style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', loadEpic);
+  </script>
+</body>
+</html>
